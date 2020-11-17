@@ -9,10 +9,17 @@
 body {
   background-color: #edf8fc;
   color: #3a3c3d;
+  margin: auto;
+  padding: 10px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
-header h1 {
+
+header{
   text-align: center;
 }
+
 .mainPage {
   margin: 40px;
   border: 1px solid black;
@@ -20,3 +27,16 @@ header h1 {
   background-color: #d1dbdf;
 }
 
+button {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+
+@media all and (min-width: 800px) {
+  body {
+    margin: 0px 250px;
+    display: flex;
+    flex-direction: column;
+  }
+}

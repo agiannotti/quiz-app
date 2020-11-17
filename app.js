@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable quotes */
 'use strict';
@@ -105,12 +106,11 @@ function renderHtml() {
 }
 
 function generateQuestion() {
-  console.log(`generateQuestion 'ran'`)
+  console.log(`generateQuestion 'ran'`);
 }
 
 function handleStartQuiz() {
   let question = store.questions[store.questionNumber];
-  return ''
   console.log(`handleStartQuiz 'ran'`);
 }
 
