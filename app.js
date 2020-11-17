@@ -118,11 +118,54 @@ function generateMainPage() {
   console.log(`generateMainPage 'ran'`);
 }
 
+
+function generateAnswerPage() {
+  console.log(`generateAnswerPage 'ran'`);
+
+}
+
+function handleNextQuestionSubmit() {
+  console.log(`handleNextQuestionSubmit 'ran'`);
+
+}
+
+function handleAnswerSubmit() {
+  console.log(`handleAnswerSubmit 'ran'`);
+
+}
+
+function generateCorrectPage() {
+  console.log(`generateCorrectPage 'ran'`);
+
+}
+function generateIncorrectPage() {
+  console.log(`generateIncorrectPage'ran'`);
+
+}
+
+function generateEndOfGamePage() {
+  console.log(`generateEndOfGamePage'ran'`);
+
+}
+
+function handleResetSubmit() {
+  console.log(`handleResetSubmit 'ran'`);
+
+}
 function main() {
+
   $(renderHtml);
   $(handleStartQuiz);
+  $(handleAnswerSubmit);
+  $(handleNextQuestionSubmit);
+  $(handleResetSubmit);
   $(generateQuestion);
   $(generateMainPage);
+  $(generateAnswerPage);
+  $(generateCorrectPage);
+  $(generateIncorrectPage);
+  $(generateEndOfGamePage);
+  
 
 }
 
