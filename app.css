@@ -7,29 +7,34 @@
   *
 */
 body {
-  background-color: #edf8fc;
-  color: #3a3c3d;
+  background-color: lightgray;
+  color: black;
   margin: auto;
   padding: 10px 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
+  font-family: monospace;
+  font-size: 16px;
 }
 
-header{
+header {
   text-align: center;
+  font-size: 18px;
 }
 
-.mainPage {
+.questionPage {
   margin: 40px;
   border: 1px solid black;
   padding: 20px;
-  background-color: #d1dbdf;
+  background-color: whitesmoke;
+  border-radius: 20px;
 }
 
 button {
   padding: 20px;
   margin-top: 20px;
+  border-radius: 5px;
 }
 
 

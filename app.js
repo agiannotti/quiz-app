@@ -11,16 +11,18 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'When will we go to mars?',
+      questionNumber: 1,
+      question: 'Which city has the highest density of cats?',
       answers: [
-        'Eventually',
-        'Right now',
-        'Yesterday',
-        'Where is mars?'
+        'Tokyo',
+        'Istanbul',
+        'New York City',
+        'Paris'
       ],
-      correctAnswer: 'Eventually'
+      correctAnswer: 'Istanbul'
     },
     {
+      questionNumber: 2,
       question: 'Which body of water is Easter island located in?',
       answers: [
         'Adriatic Sea',
@@ -30,28 +32,31 @@ const store = {
       ],
       correctAnswer: 'The Pacific Ocean'
     },
-    {
-      question: 'What color are my cats?',
+    { 
+      questionNumber: 3,
+      question: 'Which planet has zero land mass?',
       answers: [
-        'Brown and orange',
-        'White with grey splotches',
-        'Black',
-        'Cream'
+        'Venus',
+        'Mercury',
+        'Saturn',
+        'Neptune'
       ],
-      correctAnswer: 'White with grey splotches'
+      correctAnswer: 'Saturn'
     },
     {
-      question: 'Which method of brewing coffee is the obvious, best way of brewing coffee?',
+      questionNumber: 4,
+      question: 'Which method of brewing coffee is considered immersion?',
       answers: [
-        'Machine drip coffee',
-        'Instant powdered mixture',
+        'Chemex',
+        'AeroPress',
         'French press',
-        'Pourover'
+        'Machine drip'
       ],
-      correctAnswer: 'Pourover'
+      correctAnswer: 'French Press'
     },
     {
-      question: 'What is the distance from LA to NYC?',
+      questionNumber: 5,
+      question: 'What is the distance from LA to New York City?',
       answers: [
         '2,794 miles',
         '1200 clicks',
@@ -61,7 +66,7 @@ const store = {
       correctAnswer: '2,794 miles'
     }
   ],
-  quizStarted: false,
+  quizStarted: true,
   questionNumber: 0,
   score: 0
 };
@@ -85,53 +90,33 @@ const store = {
 
 // These functions return HTML templates
 
-/********** RENDER FUNCTION(S) **********/
-
-// This function conditionally replaces the contents of the <main> tag based on the state of the store
-
-/********** EVENT HANDLER FUNCTIONS **********/
-
-// These functions handle events (submit, click, etc)
-
-
-function renderHtml() {
-  let html = '';
-  console.log(`renderQuestion 'ran'`);
-  if(store.quizStarted === false) {
-    html = generateMainPage();
-  } else {
-    html= generateQuestion();
-  }
-  $('main').html(html);
-}
-
 function generateQuestion() {
-  console.log(`generateQuestion 'ran'`);
-}
-
-function handleStartQuiz() {
   let question = store.questions[store.questionNumber];
-  console.log(`handleStartQuiz 'ran'`);
+  console.log(`generateQuestion 'ran'`);
+
+  return `
+  <div class='questionPage'>
+    <form id='questionAndAnswers'>
+    <h2>${question.question}</h2>
+      <input type="radio" id="answer1" name="answer" value=${question.answers[0]}>
+      <label for="answer1">${question.answers[0]}</label><br>
+      <input type="radio" id="answer2" name="answer" value=${question.answers[1]}>
+      <label for="answer2">${question.answers[1]}</label><br>
+      <input type="radio" id="answer3" name="answer" value=${question.answers[2]}>
+      <label for="answer3">${question.answers[2]}</label><br>
+      <input type="radio" id="answer4" name="answer" value=${question.answers[3]}>
+      <label for="answer4">${question.answers[3]}</label><br></br>
+      <button type="button">Submit Answer.</button>
+    </form>
+  </div>`;
 }
 
 function generateMainPage() {
   console.log(`generateMainPage 'ran'`);
-}
-
-
-function generateAnswerPage() {
-  console.log(`generateAnswerPage 'ran'`);
-
-}
-
-function handleNextQuestionSubmit() {
-  console.log(`handleNextQuestionSubmit 'ran'`);
-
-}
-
-function handleAnswerSubmit() {
-  console.log(`handleAnswerSubmit 'ran'`);
-
+  return `
+  <h2>Here's a Quiz with a few questions regarding life and living.</h2>
+  <button id='#startQuiz' type="button">Begin Quiz</button>
+  `;
 }
 
 function generateCorrectPage() {
@@ -140,7 +125,6 @@ function generateCorrectPage() {
 }
 function generateIncorrectPage() {
   console.log(`generateIncorrectPage'ran'`);
-
 }
 
 function generateEndOfGamePage() {
@@ -148,23 +132,54 @@ function generateEndOfGamePage() {
 
 }
 
+/********** RENDER FUNCTION(S) **********/
+
+// This function conditionally replaces the contents of the <main> tag based on the state of the store
+
+function renderHtml() {
+  let html = '';
+  console.log(`renderHtml 'ran'`);
+  if(store.quizStarted === false) {
+    html = generateMainPage();
+  } else {
+    html= generateQuestion();
+  }
+  $('main').html(html);
+}
+
+/********** EVENT HANDLER FUNCTIONS **********/
+
+// These functions handle events (submit, click, etc)
+
+function handleStartQuiz() {
+  $('main').on('click', '#startQuiz', function(event) {
+    event.preventDefaiult;
+    renderHtml();
+    console.log(`handleStartQuiz 'ran'`);
+  });
+}
+
+function handleAnswerSubmit() {
+  console.log(`handleAnswerSubmit 'ran'`);
+}
+
 function handleResetSubmit() {
   console.log(`handleResetSubmit 'ran'`);
 
 }
+
+
 function main() {
 
   $(renderHtml);
   $(handleStartQuiz);
   $(handleAnswerSubmit);
-  $(handleNextQuestionSubmit);
-  $(handleResetSubmit);
   $(generateQuestion);
   $(generateMainPage);
-  $(generateAnswerPage);
   $(generateCorrectPage);
   $(generateIncorrectPage);
   $(generateEndOfGamePage);
+  $(handleResetSubmit);
   
 
 }
