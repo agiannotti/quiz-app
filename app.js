@@ -52,23 +52,24 @@ const store = {
         'French press',
         'Machine drip'
       ],
-      correctAnswer: 'French Press'
+      correctAnswer: 'French press'
     },
     {
       questionNumber: 5,
       question: 'What is the distance from LA to New York City?',
       answers: [
         '2,794 miles',
-        '1200 clicks',
+        '1200 klicks',
         '200 yalms',
         'A single Parsec'
       ],
       correctAnswer: '2,794 miles'
     }
   ],
-  quizStarted: true,
+  quizStarted: false,
   questionNumber: 0,
-  score: 0
+  score: 0,
+  incorrect:0
 };
 
 /**
@@ -90,98 +91,160 @@ const store = {
 
 // These functions return HTML templates
 
-function generateQuestion() {
-  let question = store.questions[store.questionNumber];
-  console.log(`generateQuestion 'ran'`);
+function generateQuestionPage() {
 
-  return `
-  <div class='questionPage'>
-    <form id='questionAndAnswers'>
+
+  let question = store.questions[store.questionNumber];
+
+  let answers = question.answers.map((answer, idx) =>{
+    //console.log(answer,idx);
+    if (idx ===0) {
+      return `<input type="radio" id="answer${idx}" name="answer" value='${answer}' required>
+    <label for='answer${idx}'>${answer}</label><br>`;
+    }
+    return `<input type="radio" id="answer${idx}" name="answer" value='${answer}'>
+    <label for='answer${idx}'>${answer}</label><br>`;
+  });
+  return `<div class='mainPage'>
+  <div class='status'>Current Question: ${store.questionNumber + 1} out of 5</div>
+  <div class='score'>Current Score: ${store.score}</div>
+  <form id='question'>
     <h2>${question.question}</h2>
-      <input type="radio" id="answer1" name="answer" value=${question.answers[0]}>
-      <label for="answer1">${question.answers[0]}</label><br>
-      <input type="radio" id="answer2" name="answer" value=${question.answers[1]}>
-      <label for="answer2">${question.answers[1]}</label><br>
-      <input type="radio" id="answer3" name="answer" value=${question.answers[2]}>
-      <label for="answer3">${question.answers[2]}</label><br>
-      <input type="radio" id="answer4" name="answer" value=${question.answers[3]}>
-      <label for="answer4">${question.answers[3]}</label><br></br>
-      <button type="button">Submit Answer.</button>
+    ${answers.join("")}
+    <button class='submit'>Submit Answer.</button>
     </form>
   </div>`;
 }
 
 function generateMainPage() {
   console.log(`generateMainPage 'ran'`);
-  return `
+  return `<div class='mainPage'>
   <h2>Here's a Quiz with a few questions regarding life and living.</h2>
-  <button id='#startQuiz' type="button">Begin Quiz</button>
+  <button id='startQuiz' type="button">Begin Quiz</button>
+  </div>
   `;
 }
 
 function generateCorrectPage() {
   console.log(`generateCorrectPage 'ran'`);
+  return `
+  <div class='correctPage'>
+  <h2>Nicely done!</h2>
+  <p>Current Score: ${store.score}</p>
+  <button id='nextQuestion' type="button">Next</button>
+  </div>
+  `;
+  
 
 }
 function generateIncorrectPage() {
   console.log(`generateIncorrectPage'ran'`);
+  return `
+  <div class='incorrectPage'>
+  <h2>Not quite.</h2>
+  <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer}</p>
+  <p>Current Score: ${store.score}</p>
+  <button id='nextQuestion' type="button">Next</button>
+  </div>
+  `;
 }
 
 function generateEndOfGamePage() {
-  console.log(`generateEndOfGamePage'ran'`);
-
+  return `
+  <div class='finalPage'>
+  <h2>Quiz time is over!</h2>
+  <p>Your final score is ${store.score} with ${store.incorrect} incorrect! </p>
+  <button id='startOver' type="button">Try again?</button>
+  </div>
+  `;
 }
 
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
-function renderHtml() {
+function render() {
   let html = '';
-  console.log(`renderHtml 'ran'`);
-  if(store.quizStarted === false) {
-    html = generateMainPage();
+  if (store.quizStarted === false) {
+    if(store.questionNumber === store.questions.length) {
+      html = generateEndOfGamePage();
+    } else {
+      html = generateMainPage();
+    }
+  } else if (store.questionNumber === store.questions.length){
+    html = generateEndOfGamePage();
   } else {
-    html= generateQuestion();
+    html= generateQuestionPage();
   }
   $('main').html(html);
+//console.log(`render'ran'`);
+//how to know when to show final page
 }
+
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
 
 function handleStartQuiz() {
-  $('main').on('click', '#startQuiz', function(event) {
-    event.preventDefaiult;
-    renderHtml();
+  $('main').on('click', '#startQuiz', function() {
+    store.quizStarted = true;
+    render();
     console.log(`handleStartQuiz 'ran'`);
   });
 }
 
 function handleAnswerSubmit() {
-  console.log(`handleAnswerSubmit 'ran'`);
+  $('main').on('submit', '#question', function(event){
+    event.preventDefault();
+    let chosenAnswer = $("input[name='answer']:checked").val();
+    let correctAnswer = store.questions[store.questionNumber].correctAnswer;
+    //compare against correct answer
+    if (chosenAnswer === correctAnswer) {
+      store.score++;
+      $('main').html(generateCorrectPage());
+      
+    } else {
+      store.incorrect++;
+      $('main').html(generateIncorrectPage());
+    }
+  });
+  //show user if they are correct or incorrect
+  //on to next question
+  //increment / decrement score
+  //store.questionNumber++;
+  //render();
 }
 
 function handleResetSubmit() {
   console.log(`handleResetSubmit 'ran'`);
-
+  $('main').on('click', '#startOver', function(){
+    store.quizStarted = false;
+    store.score =0;
+    store.questionNumber=0;
+    render();
+    console.log(`handleStartQuiz 'ran'`);
+  });
 }
 
+function handleNextQuestion() {
+  $('main').on('click', '#nextQuestion', function(){
+    store.questionNumber++;
+    render();
+  });
+}
 
 function main() {
-
-  $(renderHtml);
-  $(handleStartQuiz);
-  $(handleAnswerSubmit);
-  $(generateQuestion);
-  $(generateMainPage);
-  $(generateCorrectPage);
-  $(generateIncorrectPage);
-  $(generateEndOfGamePage);
-  $(handleResetSubmit);
-  
-
+  render();
+  handleStartQuiz();
+  handleAnswerSubmit();
+  generateQuestionPage();
+  generateMainPage();
+  generateCorrectPage();
+  generateIncorrectPage();
+  generateEndOfGamePage();
+  handleResetSubmit();
+  handleNextQuestion();
 }
 
 $(main);
