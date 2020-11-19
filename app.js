@@ -105,12 +105,12 @@ function generateQuestionPage() {
     <label for='answer${idx}'>${answer}</label><br>`;
   });
   return `<div class='mainPage'>
-  <div class='status'>Current Question: ${store.questionNumber + 1} out of 5</div>
-  <div class='score'>Current Score: ${store.score}</div>
+  <div class='status'>Question ${store.questionNumber + 1} of 5</div>
+  <div class='score'>Score ${store.score}</div>
   <form id='question'>
     <h2>${question.question}</h2>
     ${answers.join("")}
-    <button class='submit'>Submit Answer.</button>
+    <button class='submit'>Submit Answer</button>
     </form>
   </div>`;
 }
@@ -118,8 +118,8 @@ function generateQuestionPage() {
 function generateMainPage() {
   console.log(`generateMainPage 'ran'`);
   return `<div class='mainPage'>
-  <h2>Here's a Quiz with a few questions regarding life and living.</h2>
-  <button id='startQuiz' type="button">Begin Quiz</button>
+  <h2>A Quiz.</h2>
+  <button id='startQuiz' type="button">Begin</button>
   </div>
   `;
 }
@@ -128,9 +128,10 @@ function generateCorrectPage() {
   console.log(`generateCorrectPage 'ran'`);
   return `
   <div class='correctPage'>
+  <div class='status'>Question ${store.questionNumber + 1} of 5</div>
+  <div class='score'>Score ${store.score}</div>
   <h2>Nicely done!</h2>
-  <p>Current Score: ${store.score}</p>
-  <button id='nextQuestion' type="button">Next</button>
+  <button class='button' id='nextQuestion' type="button">Next question</button>
   </div>
   `;
   
@@ -140,10 +141,11 @@ function generateIncorrectPage() {
   console.log(`generateIncorrectPage'ran'`);
   return `
   <div class='incorrectPage'>
+  <div class='status'>Question ${store.questionNumber + 1} of 5</div>
+  <div class='score'>Score ${store.score}</div>
   <h2>Not quite.</h2>
-  <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer}</p>
-  <p>Current Score: ${store.score}</p>
-  <button id='nextQuestion' type="button">Next</button>
+  <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer}.</p>
+  <button id='nextQuestion' type="button">Next question</button>
   </div>
   `;
 }
@@ -152,7 +154,8 @@ function generateEndOfGamePage() {
   return `
   <div class='finalPage'>
   <h2>Quiz time is over!</h2>
-  <p>Your final score is ${store.score} with ${store.incorrect} incorrect! </p>
+  <p>Your final score is ${store.score}!</p>
+  <p>You answered ${store.incorrect} questions incorrectly.</p>
   <button id='startOver' type="button">Try again?</button>
   </div>
   `;

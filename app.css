@@ -6,42 +6,53 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+
+
 body {
-  background-color: lightgray;
-  color: black;
+  background-color: #D9D9D9;
+  color: #59564B;
   margin: auto;
   padding: 10px 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  font-family: monospace;
-  font-size: 16px;
-}
-
-header {
-  text-align: center;
+  font-family: 'Tenor Sans', sans-serif;
   font-size: 18px;
 }
 
+header {
+  justify-content: center;
+  text-align: center;
+  font-size: 22px;
+}
+
 main {
-  margin: 20px 20px;
-  border: 1px solid black;
-  padding: 20px;
-  background-color: whitesmoke;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #B0A8B3;
+  padding: 50px;
+  background-color: #EDEDED;
   border-radius: 20px;
 }
 
 button {
-  padding: 20px;
-  margin-top: 20px;
+  padding: 25px;
+  margin-top: 32px;
   border-radius: 10px;
+  border: 1px solid #B0A8B3;
+  background-color: #F7F7F7;
 }
-
 
 @media all and (min-width: 800px) {
   body {
-    margin: 0px 250px;
+    width: 45%;
     display: flex;
     flex-direction: column;
   }
+  main {
+    padding: 50px;
+  }
 }
+
