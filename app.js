@@ -97,7 +97,6 @@ function generateQuestionPage() {
   let question = store.questions[store.questionNumber];
 
   let answers = question.answers.map((answer, idx) =>{
-    //console.log(answer,idx);
     if (idx ===0) {
       return `<input type="radio" id="answer${idx}" name="answer" value='${answer}' required>
     <label for='answer${idx}'>${answer}</label><br>`;
@@ -177,8 +176,6 @@ function render() {
     html= generateQuestionPage();
   }
   $('main').html(html);
-//console.log(`render'ran'`);
-//how to know when to show final page
 }
 
 
@@ -199,7 +196,6 @@ function handleAnswerSubmit() {
     event.preventDefault();
     let chosenAnswer = $("input[name='answer']:checked").val();
     let correctAnswer = store.questions[store.questionNumber].correctAnswer;
-    //compare against correct answer
     if (chosenAnswer === correctAnswer) {
       store.score++;
       $('main').html(generateCorrectPage());
@@ -209,11 +205,6 @@ function handleAnswerSubmit() {
       $('main').html(generateIncorrectPage());
     }
   });
-  //show user if they are correct or incorrect
-  //on to next question
-  //increment / decrement score
-  //store.questionNumber++;
-  //render();
 }
 
 function handleResetSubmit() {

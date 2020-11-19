@@ -23,8 +23,8 @@ header {
   font-size: 18px;
 }
 
-.questionPage {
-  margin: 40px;
+main {
+  margin: 20px 20px;
   border: 1px solid black;
   padding: 20px;
   background-color: whitesmoke;
@@ -34,7 +34,7 @@ header {
 button {
   padding: 20px;
   margin-top: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 
