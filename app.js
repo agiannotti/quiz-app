@@ -50,28 +50,8 @@ const store = {
   incorrect: 0,
 };
 
-/**
- *
- * Technical requirements:
- *
- * Your app should include a render() function, that regenerates the view each time the store is updated.
- * See your course material, consult your instructor, and reference the slides for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- *
- */
-
-/********** TEMPLATE GENERATION FUNCTIONS **********/
-
-// These functions return HTML templates
-
 function generateQuestionPage() {
   let question = store.questions[store.questionNumber];
-
   let answers = question.answers.map((answer, idx) => {
     if (idx === 0) {
       return `<input type="radio" id="answer${idx}" name="answer" value='${answer}' required>
@@ -87,7 +67,7 @@ function generateQuestionPage() {
     <h2>${question.question}</h2>
     ${answers.join('')}
     <button class='submit'>Submit Answer</button>
-    </form>
+    </form>   
   </div>`;
 }
 
@@ -156,10 +136,6 @@ function render() {
   }
   $('main').html(html);
 }
-
-/********** EVENT HANDLER FUNCTIONS **********/
-
-// These functions handle events (submit, click, etc)
 
 function handleStartQuiz() {
   $('main').on('click', '#startQuiz', function () {
